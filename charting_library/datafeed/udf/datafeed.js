@@ -98,14 +98,74 @@ Datafeeds.UDFCompatibleDatafeed.prototype._send = function(url, params) {
 
 Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
   var that = this;
-  this._send(this._datafeedURL + '/config')
-    .done(function(response) {
-      var configurationData = JSON.parse(response);
-      that._setupWithConfiguration(configurationData);
-    })
-    .fail(function(reason) {
-      that._setupWithConfiguration(that.defaultConfiguration());
-    });
+  var configurationData = {  
+    "supports_search":true,
+    "supports_group_request":false,
+    "supports_marks":false,
+    "supports_timescale_marks":false,
+    "supports_time":false,
+    "exchanges":[  
+      {  
+        "value":"",
+        "name":"All Exchanges",
+        "desc":""
+      },
+      {  
+        "value":"XETRA",
+        "name":"XETRA",
+        "desc":"XETRA"
+      },
+      {  
+        "value":"NSE",
+        "name":"NSE",
+        "desc":"NSE"
+      },
+      {  
+        "value":"NasdaqNM",
+        "name":"NasdaqNM",
+        "desc":"NasdaqNM"
+      },
+      {  
+        "value":"NYSE",
+        "name":"NYSE",
+        "desc":"NYSE"
+      },
+      {  
+        "value":"CDNX",
+        "name":"CDNX",
+        "desc":"CDNX"
+      },
+      {  
+        "value":"Stuttgart",
+        "name":"Stuttgart",
+        "desc":"Stuttgart"
+      }
+    ],
+    "symbolsTypes":[  
+      {  
+        "name":"All types",
+        "value":""
+      },
+      {  
+        "name":"Stock",
+        "value":"stock"
+      },
+      {  
+        "name":"Index",
+        "value":"index"
+      }
+    ],
+    "supportedResolutions":[  
+      "D",
+      "2D",
+      "3D",
+      "W",
+      "3W",
+      "M",
+      "6M"
+    ]
+  };
+  that._setupWithConfiguration(configurationData);
 };
 
 Datafeeds.UDFCompatibleDatafeed.prototype.onReady = function(callback) {
@@ -279,32 +339,32 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
     onSymbolResolvedCallback(postProcessedData);
   }
 
-  if (!this._configuration.supports_group_request) {
-    this._send(this._datafeedURL + this._symbolResolveURL, {
-      symbol: symbolName ? symbolName.toUpperCase() : ''
-    })
-      .done(function(response) {
-        var data = JSON.parse(response);
-
-        if (data.s && data.s !== 'ok') {
-          onResolveErrorCallback('unknown_symbol');
-        } else {
-          onResultReady(data);
-        }
-      })
-      .fail(function(reason) {
-        that._logMessage('Error resolving symbol: ' + JSON.stringify([reason]));
-        onResolveErrorCallback('unknown_symbol');
-      });
-  } else {
-    if (this._initializationFinished) {
-      this._symbolsStorage.resolveSymbol(symbolName, onResultReady, onResolveErrorCallback);
-    } else {
-      this.on('initialized', function() {
-        that._symbolsStorage.resolveSymbol(symbolName, onResultReady, onResolveErrorCallback);
-      });
-    }
-  }
+  var data = {  
+    "name":"AAPL",
+    "exchange-traded":"NasdaqNM",
+    "exchange-listed":"NasdaqNM",
+    "timezone":"America/New_York",
+    "minmov":1,
+    "minmov2":0,
+    "pricescale":10,
+    "pointvalue":1,
+    "session":"0930-1630",
+    "has_intraday":false,
+    "has_no_volume":false,
+    "ticker":"AAPL",
+    "description":"Apple Inc.",
+    "type":"stock",
+    "supported_resolutions":[  
+      "D",
+      "2D",
+      "3D",
+      "W",
+      "3W",
+      "M",
+      "6M"
+    ]
+  };
+  onResultReady(data);
 };
 
 Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/history';
