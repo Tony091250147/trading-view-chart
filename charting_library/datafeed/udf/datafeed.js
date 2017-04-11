@@ -367,7 +367,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
   onResultReady(data);
 };
 
-Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/history';
+Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/1/history';
 
 Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolution, rangeStartDate, rangeEndDate, onDataCallback, onErrorCallback) {
   //  timestamp sample: 1399939200
@@ -376,13 +376,14 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
   }
 
   this._send(this._datafeedURL + this._historyURL, {
-    symbol: symbolInfo.ticker.toUpperCase(),
-    resolution: resolution,
+    // symbol: symbolInfo.ticker.toUpperCase(),
+    resolution: 1440,
     from: rangeStartDate,
     to: rangeEndDate
   })
   .done(function(response) {
-    var data = JSON.parse(response);
+    // var data = JSON.parse(response);
+    var data = response;
 
     var nodata = data.s === 'no_data';
 
