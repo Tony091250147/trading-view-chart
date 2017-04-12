@@ -341,9 +341,9 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
 
   setTimeout(function() {
     var data = {  
-      "name":"AAPL",
-      "exchange-traded":"NasdaqNM",
-      "exchange-listed":"NasdaqNM",
+      "name":"BTCUSD",
+      "exchange-traded":"QUOINE",
+      "exchange-listed":"QUOINE",
       "timezone":"America/New_York",
       "minmov":1,
       "minmov2":0,
@@ -353,7 +353,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
       "has_intraday":false,
       "has_no_volume":false,
       "ticker":"AAPL",
-      "description":"Apple Inc.",
+      "description":"BTCUSD",
       "type":"stock",
       "supported_resolutions":[  
         "D",
