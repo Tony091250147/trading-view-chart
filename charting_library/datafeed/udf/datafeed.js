@@ -297,21 +297,23 @@ function convertResolutionToMinutes(resolution) {
     return resolution
   };
 
+  var length = resolution.length;
+
   // Resolution is day
   if (resolution.indexOf('D') !== -1) {
-    var days = resolution.slice(-1) || 1;
+    var days = resolution.slice(0, length -1) || 1;
     return days * 24 * 60;
   }
 
   // Resolution is week
   if (resolution.indexOf('W') !== -1) {
-    var weeks = resolution.slice(-1) || 1;
+    var weeks = resolution.slice(0, length -1) || 1;
     return weeks * 7 * 24 * 60;
   }
 
   // Resolution is month
   if (resolution.indexOf('M') !== -1) {
-    var months = resolution.slice(-1) || 1;
+    var months = resolution.slice(0, length -1) || 1;
     return months * 30 * 7 * 24 * 60;
   }
 }
@@ -324,7 +326,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
 
   this._send(this._datafeedURL + this._historyURL, {
     // symbol: symbolInfo.ticker.toUpperCase(),
-    resolution: 1440,
+    resolution: convertResolutionToMinutes(resolution),
     from: rangeStartDate,
     to: rangeEndDate
   })
