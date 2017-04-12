@@ -155,15 +155,21 @@ Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
         "value":"index"
       }
     ],
-    "supportedResolutions":[  
+    "supportedResolutions": [
+      "1",
+      "3",
+      "5",
+      "15",
+      "30",
+      "60",
+      "120",
+      "240",
+      "360",
       "D",
       "2D",
       "3D",
       "W",
-      "3W",
-      "M",
-      "6M"
-    ]
+    ],
   };
   that._setupWithConfiguration(configurationData);
 };
@@ -355,15 +361,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
       "ticker":"AAPL",
       "description":"BTCUSD",
       "type":"stock",
-      "supported_resolutions":[  
-        "D",
-        "2D",
-        "3D",
-        "W",
-        "3W",
-        "M",
-        "6M"
-      ]
+      "supported_resolutions":["D"]
     };
     onResultReady(data);
   }, 0);
