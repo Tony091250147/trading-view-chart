@@ -97,7 +97,6 @@ Datafeeds.UDFCompatibleDatafeed.prototype._send = function(url, params) {
 };
 
 Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
-  var that = this;
   var configurationData = {  
     "supports_search":true,
     "supportedResolutions": [  
@@ -116,7 +115,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
       "W",
     ],
   };
-  that._setupWithConfiguration(configurationData);
+  this._setupWithConfiguration(configurationData);
 };
 
 Datafeeds.UDFCompatibleDatafeed.prototype.onReady = function(callback) {
