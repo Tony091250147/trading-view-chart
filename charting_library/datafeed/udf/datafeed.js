@@ -371,6 +371,31 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
 
 Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/1/history';
 
+function convertResolutionToMinutes(resolution) {
+  // Resolution is minute
+  if (/^\d+$/.test(resolution)) {
+    return resolution
+  };
+
+  // Resolution is day
+  if (resolution.indexOf('D') !== -1) {
+    var days = resolution.slice(-1) || 1;
+    return days * 24 * 60;
+  }
+
+  // Resolution is week
+  if (resolution.indexOf('W') !== -1) {
+    var weeks = resolution.slice(-1) || 1;
+    return weeks * 7 * 24 * 60;
+  }
+
+  // Resolution is month
+  if (resolution.indexOf('M') !== -1) {
+    var months = resolution.slice(-1) || 1;
+    return months * 30 * 7 * 24 * 60;
+  }
+}
+
 Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolution, rangeStartDate, rangeEndDate, onDataCallback, onErrorCallback) {
   //  timestamp sample: 1399939200
   if (rangeStartDate > 0 && (rangeStartDate + '').length > 10) {
