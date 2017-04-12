@@ -242,7 +242,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.searchSymbols = function(searchString,
 Datafeeds.UDFCompatibleDatafeed.prototype._symbolResolveURL = '/symbols';
 
 //  BEWARE: this function does not consider symbol's exchange
-var QUOINE_PRODUCTS = {
+var QUOINE_SYMBOLS = {
   "BTCUSD": 1,
   "BTCEUR": 3,
   "BTCJPY": 5,
@@ -276,48 +276,14 @@ function getParameterByName(name) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function getProduct() {
-  var symbol = getParameterByName('product') || 'BTCUSD'
-  return {
-    symbol: symbol,
-    id: QUOINE_PRODUCTS[symbol],
-  };
+function getSymbol() {
+  return getParameterByName('symbol') || 'BTCUSD'
 };
 
-function getSymbol() {
-  var symbol = getProduct().symbol;
-  return ({
-    "name": symbol,
-    "exchange-traded": "QUOINE",
-    "exchange-listed": "QUOINE",
-    "timezone": "America/New_York",
-    "minmov": 1,
-    "minmov2": 0,
-    "pricescale": 10,
-    "pointvalue": 1,
-    "session": "0930-1630",
-    "has_intraday": true,
-    "has_no_volume": false,
-    "ticker": symbol,
-    "description": symbol,
-    "type": "stock",
-    "supported_resolutions": [  
-      "1",
-      "3",
-      "5",
-      "15",
-      "30",
-      "60",
-      "120",
-      "240",
-      "360",
-      "D",
-      "2D",
-      "3D",
-      "W",
-    ]
-  });
-};
+function getHistoryUrl() {
+  var symbol = getSymbol();
+  return '/products/' + QUOINE_SYMBOLS[symbol] + '/history';
+}
 
 Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
   var that = this;
@@ -345,12 +311,42 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
   }
 
   setTimeout(function() {
-    var data = getSymbol();
-    onResultReady(data);
+    var symbol = getSymbol();
+    onResultReady({
+      "name": symbol,
+      "exchange-traded": "QUOINE",
+      "exchange-listed": "QUOINE",
+      "timezone": "America/New_York",
+      "minmov": 1,
+      "minmov2": 0,
+      "pricescale": 10,
+      "pointvalue": 1,
+      "session": "0930-1630",
+      "has_intraday": true,
+      "has_no_volume": false,
+      "ticker": symbol,
+      "description": symbol,
+      "type": "stock",
+      "supported_resolutions": [  
+        "1",
+        "3",
+        "5",
+        "15",
+        "30",
+        "60",
+        "120",
+        "240",
+        "360",
+        "D",
+        "2D",
+        "3D",
+        "W",
+      ]
+    });
   }, 0);
 };
 
-Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/' + getProduct().id + '/history';
+Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = getHistoryUrl();
 
 function convertResolutionToMinutes(resolution) {
   // Resolution is minute
