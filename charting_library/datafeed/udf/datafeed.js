@@ -242,6 +242,82 @@ Datafeeds.UDFCompatibleDatafeed.prototype.searchSymbols = function(searchString,
 Datafeeds.UDFCompatibleDatafeed.prototype._symbolResolveURL = '/symbols';
 
 //  BEWARE: this function does not consider symbol's exchange
+var QUOINE_PRODUCTS = {
+  "1": "BTCUSD",
+  "3": "BTCEUR",
+  "5": "BTCJPY",
+  "7": "BTCSGD",
+  "9": "BTCHKD",
+  "11": "BTCIDR",
+  "13": "BTCAUD",
+  "15": "BTCPHP",
+  "17": "BTCCNY",
+  "18": "BTCINR",
+  "27": "ETHUSD",
+  "28": "ETHEUR",
+  "29": "ETHJPY",
+  "30": "ETHSGD",
+  "31": "ETHHKD",
+  "32": "ETHIDR",
+  "33": "ETHAUD",
+  "34": "ETHPHP",
+  "35": "ETHCNY",
+  "36": "ETHINR",
+  "37": "ETHBTC"
+};
+
+function getParameterByName(name) {
+  var url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function getProductId() {
+  return getParameterByName('product') || 1;
+};
+
+function getSymbol() {
+  var productId = getProductId();
+  var symbol = QUOINE_PRODUCTS[productId];
+  return ({
+    "name": symbol,
+    "exchange-traded": "QUOINE",
+    "exchange-listed": "QUOINE",
+    "timezone": "America/New_York",
+    "minmov": 1,
+    "minmov2": 0,
+    "pricescale": 10,
+    "pointvalue": 1,
+    "session": "0930-1630",
+    "has_intraday": true,
+    "has_no_volume": false,
+    "ticker": symbol,
+    "description": symbol,
+    "type": "stock",
+    "supported_resolutions": [  
+      "1",
+      "3",
+      "5",
+      "15",
+      "30",
+      "60",
+      "120",
+      "240",
+      "360",
+      "D",
+      "2D",
+      "3D",
+      "W",
+    ]
+  });
+};
+
+Datafeeds.UDFCompatibleDatafeed.prototype._productId = getParameterByName('product') || 1;
+
 Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
   var that = this;
 
@@ -268,42 +344,12 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
   }
 
   setTimeout(function() {
-    var data = {  
-      "name":"BTCUSD",
-      "exchange-traded":"QUOINE",
-      "exchange-listed":"QUOINE",
-      "timezone":"America/New_York",
-      "minmov":1,
-      "minmov2":0,
-      "pricescale":10,
-      "pointvalue":1,
-      "session":"0930-1630",
-      "has_intraday":true,
-      "has_no_volume":false,
-      "ticker":"BTCUSD",
-      "description":"BTCUSD",
-      "type":"stock",
-      "supported_resolutions": [  
-        "1",
-        "3",
-        "5",
-        "15",
-        "30",
-        "60",
-        "120",
-        "240",
-        "360",
-        "D",
-        "2D",
-        "3D",
-        "W",
-      ]
-    };
+    var data = getSymbol();
     onResultReady(data);
   }, 0);
 };
 
-Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/1/history';
+Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/' + getProductId() + '/history';
 
 function convertResolutionToMinutes(resolution) {
   // Resolution is minute
