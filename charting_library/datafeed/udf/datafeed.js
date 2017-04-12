@@ -100,7 +100,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
   var that = this;
   var configurationData = {  
     "supports_search":true,
-    "supportedResolutions": [
+    "supportedResolutions": [  
       "1",
       "3",
       "5",
@@ -278,12 +278,26 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
       "pricescale":10,
       "pointvalue":1,
       "session":"0930-1630",
-      "has_intraday":false,
+      "has_intraday":true,
       "has_no_volume":false,
       "ticker":"BTCUSD",
       "description":"BTCUSD",
       "type":"stock",
-      "supported_resolutions":["D", "2D", "3D", "W"]
+      "supported_resolutions": [  
+        "1",
+        "3",
+        "5",
+        "15",
+        "30",
+        "60",
+        "120",
+        "240",
+        "360",
+        "D",
+        "2D",
+        "3D",
+        "W",
+      ]
     };
     onResultReady(data);
   }, 0);
