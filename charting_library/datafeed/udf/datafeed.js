@@ -243,27 +243,27 @@ Datafeeds.UDFCompatibleDatafeed.prototype._symbolResolveURL = '/symbols';
 
 //  BEWARE: this function does not consider symbol's exchange
 var QUOINE_PRODUCTS = {
-  "1": "BTCUSD",
-  "3": "BTCEUR",
-  "5": "BTCJPY",
-  "7": "BTCSGD",
-  "9": "BTCHKD",
-  "11": "BTCIDR",
-  "13": "BTCAUD",
-  "15": "BTCPHP",
-  "17": "BTCCNY",
-  "18": "BTCINR",
-  "27": "ETHUSD",
-  "28": "ETHEUR",
-  "29": "ETHJPY",
-  "30": "ETHSGD",
-  "31": "ETHHKD",
-  "32": "ETHIDR",
-  "33": "ETHAUD",
-  "34": "ETHPHP",
-  "35": "ETHCNY",
-  "36": "ETHINR",
-  "37": "ETHBTC"
+  "BTCUSD": 1,
+  "BTCEUR": 3,
+  "BTCJPY": 5,
+  "BTCSGD": 7,
+  "BTCHKD": 9,
+  "BTCIDR": 11,
+  "BTCAUD": 13,
+  "BTCPHP": 15,
+  "BTCCNY": 17,
+  "BTCINR": 18,
+  "ETHUSD": 27,
+  "ETHEUR": 28,
+  "ETHJPY": 29,
+  "ETHSGD": 30,
+  "ETHHKD": 31,
+  "ETHIDR": 32,
+  "ETHAUD": 33,
+  "ETHPHP": 34,
+  "ETHCNY": 35,
+  "ETHINR": 36,
+  "ETHBTC": 37
 };
 
 function getParameterByName(name) {
@@ -276,13 +276,16 @@ function getParameterByName(name) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function getProductId() {
-  return getParameterByName('product') || 1;
+function getProduct() {
+  var symbol = getParameterByName('product') || 'BTCUSD'
+  return {
+    symbol: symbol,
+    id: QUOINE_PRODUCTS[symbol],
+  };
 };
 
 function getSymbol() {
-  var productId = getProductId();
-  var symbol = QUOINE_PRODUCTS[productId];
+  var symbol = getProduct().symbol;
   return ({
     "name": symbol,
     "exchange-traded": "QUOINE",
@@ -316,8 +319,6 @@ function getSymbol() {
   });
 };
 
-Datafeeds.UDFCompatibleDatafeed.prototype._productId = getParameterByName('product') || 1;
-
 Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
   var that = this;
 
@@ -349,7 +350,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
   }, 0);
 };
 
-Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/' + getProductId() + '/history';
+Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/' + getProduct().id + '/history';
 
 function convertResolutionToMinutes(resolution) {
   // Resolution is minute
