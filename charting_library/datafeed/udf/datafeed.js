@@ -280,10 +280,10 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
       "session":"0930-1630",
       "has_intraday":false,
       "has_no_volume":false,
-      "ticker":"AAPL",
+      "ticker":"BTCUSD",
       "description":"BTCUSD",
       "type":"stock",
-      "supported_resolutions":["D"]
+      "supported_resolutions":["D", "2D", "3D", "W"]
     };
     onResultReady(data);
   }, 0);
