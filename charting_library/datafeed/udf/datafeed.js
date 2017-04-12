@@ -339,32 +339,34 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
     onSymbolResolvedCallback(postProcessedData);
   }
 
-  var data = {  
-    "name":"AAPL",
-    "exchange-traded":"NasdaqNM",
-    "exchange-listed":"NasdaqNM",
-    "timezone":"America/New_York",
-    "minmov":1,
-    "minmov2":0,
-    "pricescale":10,
-    "pointvalue":1,
-    "session":"0930-1630",
-    "has_intraday":false,
-    "has_no_volume":false,
-    "ticker":"AAPL",
-    "description":"Apple Inc.",
-    "type":"stock",
-    "supported_resolutions":[  
-      "D",
-      "2D",
-      "3D",
-      "W",
-      "3W",
-      "M",
-      "6M"
-    ]
-  };
-  onResultReady(data);
+  setTimeout(function() {
+    var data = {  
+      "name":"AAPL",
+      "exchange-traded":"NasdaqNM",
+      "exchange-listed":"NasdaqNM",
+      "timezone":"America/New_York",
+      "minmov":1,
+      "minmov2":0,
+      "pricescale":10,
+      "pointvalue":1,
+      "session":"0930-1630",
+      "has_intraday":false,
+      "has_no_volume":false,
+      "ticker":"AAPL",
+      "description":"Apple Inc.",
+      "type":"stock",
+      "supported_resolutions":[  
+        "D",
+        "2D",
+        "3D",
+        "W",
+        "3W",
+        "M",
+        "6M"
+      ]
+    };
+    onResultReady(data);
+  }, 0);
 };
 
 Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/products/1/history';
