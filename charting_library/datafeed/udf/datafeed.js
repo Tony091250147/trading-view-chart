@@ -104,57 +104,6 @@ Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
     "supports_marks":false,
     "supports_timescale_marks":false,
     "supports_time":false,
-    "exchanges":[  
-      {  
-        "value":"",
-        "name":"All Exchanges",
-        "desc":""
-      },
-      {  
-        "value":"XETRA",
-        "name":"XETRA",
-        "desc":"XETRA"
-      },
-      {  
-        "value":"NSE",
-        "name":"NSE",
-        "desc":"NSE"
-      },
-      {  
-        "value":"NasdaqNM",
-        "name":"NasdaqNM",
-        "desc":"NasdaqNM"
-      },
-      {  
-        "value":"NYSE",
-        "name":"NYSE",
-        "desc":"NYSE"
-      },
-      {  
-        "value":"CDNX",
-        "name":"CDNX",
-        "desc":"CDNX"
-      },
-      {  
-        "value":"Stuttgart",
-        "name":"Stuttgart",
-        "desc":"Stuttgart"
-      }
-    ],
-    "symbolsTypes":[  
-      {  
-        "name":"All types",
-        "value":""
-      },
-      {  
-        "name":"Stock",
-        "value":"stock"
-      },
-      {  
-        "name":"Index",
-        "value":"index"
-      }
-    ],
     "supportedResolutions": [
       "1",
       "3",
@@ -267,32 +216,9 @@ Datafeeds.UDFCompatibleDatafeed.prototype.searchSymbols = function(searchString,
   }
 
   if (this._configuration.supports_search) {
-    this._send(this._datafeedURL + '/search', {
-      limit: MAX_SEARCH_RESULTS,
-      query: searchString.toUpperCase(),
-      type: type,
-      exchange: exchange
-    })
-      .done(function(response) {
-        var data = JSON.parse(response);
-
-        for (var i = 0; i < data.length; ++i) {
-          if (!data[i].params) {
-            data[i].params = [];
-          }
-
-          data[i].exchange = data[i].exchange || '';
-        }
-
-        if (typeof data.s == 'undefined' || data.s !== 'error') {
-          onResultReadyCallback(data);
-        } else {
-          onResultReadyCallback([]);
-        }
-      })
-      .fail(function(reason) {
-        onResultReadyCallback([]);
-      });
+    setTimeout(function() {
+      onResultReadyCallback([]);
+    }, 0);
   } else {
     if (!this._symbolSearch) {
       throw new Error('Datafeed error: inconsistent configuration (symbol search)');
