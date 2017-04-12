@@ -100,10 +100,6 @@ Datafeeds.UDFCompatibleDatafeed.prototype._initialize = function() {
   var that = this;
   var configurationData = {  
     "supports_search":true,
-    "supports_group_request":false,
-    "supports_marks":false,
-    "supports_timescale_marks":false,
-    "supports_time":false,
     "supportedResolutions": [
       "1",
       "3",
