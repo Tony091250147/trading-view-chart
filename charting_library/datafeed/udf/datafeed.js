@@ -410,24 +410,26 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
     var ohlPresent = typeof data.o != 'undefined';
 
     for (var i = 0; i < barsCount; ++i) {
-      var barValue = {
-        time: data.t[i] * 1000,
-        close: data.c[i]
-      };
+      if (data.o[i]) {
+        var barValue = {
+          time: data.t[i] * 1000,
+          close: data.c[i]
+        };
 
-      if (ohlPresent) {
-        barValue.open = data.o[i];
-        barValue.high = data.h[i];
-        barValue.low = data.l[i];
-      } else {
-        barValue.open = barValue.high = barValue.low = barValue.close;
+        if (ohlPresent) {
+          barValue.open = data.o[i];
+          barValue.high = data.h[i];
+          barValue.low = data.l[i];
+        } else {
+          barValue.open = barValue.high = barValue.low = barValue.close;
+        }
+
+        if (volumePresent) {
+          barValue.volume = data.v[i];
+        }
+
+        bars.push(barValue);
       }
-
-      if (volumePresent) {
-        barValue.volume = data.v[i];
-      }
-
-      bars.push(barValue);
     }
 
     onDataCallback(bars, { noData: nodata, nextTime: data.nb || data.nextTime });
