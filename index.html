@@ -31,6 +31,7 @@
       var schemes = {
         light: {
           bg: '#e5eff5',
+          grid: 'rgba(171, 171, 171, 0.1)',
           text: '#333333',
           textStrong: '#333333',
           textWeak: '#ababab',
@@ -44,6 +45,7 @@
         },
         dark: {
           bg: '#091d2a',
+          grid: 'rgba(25, 81, 113, 0.1)',
           text: '#2474a3',
           textStrong: '#2474a3',
           textWeak: '#195171',
@@ -57,6 +59,7 @@
         },
         'dark-2': {
           bg: '#151c28',
+          grid: 'rgba(126, 143, 165, 0.1)',
           text: '#D3DAE4',
           textStrong: '#D3DAE4',
           textWeak: '#7e8fa5',
@@ -70,6 +73,7 @@
         },
         finance: {
           bg: '#000724',
+          grid: 'rgba(127, 138, 180, 0.1)',
           text: '#b7c6e0',
           textStrong: '#b7c6e0',
           textWeak: '#7f8ab4',
@@ -83,6 +87,7 @@
         },
         green: {
           bg: '#0f1f29',
+          grid: 'rgba(142, 157, 165, 0.1)',
           text: '#FFFFFF',
           textStrong: '#FFFFFF',
           textWeak: '#8E9DA5',
@@ -96,6 +101,7 @@
         },
         'traders-light': {
           bg: '#ffffff',
+          grid: 'rgba(87, 185, 255, 0.1)',
           text: '#006bb8',
           textStrong: '#006bb8',
           textWeak: '#57b9ff',
@@ -109,6 +115,7 @@
         },
         'traders-dark': {
           bg: '#072b46',
+          grid: 'rgba(39, 62, 78, 0.1)',
           text: '#5281a3',
           textStrong: '#5281a3',
           textWeak: '#273e4e',
@@ -122,6 +129,7 @@
         },
         'qryptos-dark': {
           bg: '#151204',
+          grid: 'rgba(128, 128, 128, 0.1)',
           text: '#ffffff',
           textStrong: '#292821',
           textWeak: '#808080',
@@ -135,6 +143,7 @@
         },
         'qryptos-light': {
           bg: '#f5f4f0',
+          grid: 'rgba(153, 152, 150, 0.1)',
           text: '#3d3d3d',
           textStrong: '#3d3d3d',
           textWeak: '#999896',
@@ -182,11 +191,11 @@
 
             // Grid
             "paneProperties.background": colors.bg,
-            "paneProperties.vertGridProperties.color": colors.textWeak,
+            "paneProperties.vertGridProperties.color": colors.grid,
             "paneProperties.vertGridProperties.style": LINESTYLE_SOLID,
-            "paneProperties.horzGridProperties.color": colors.textWeak,
+            "paneProperties.horzGridProperties.color": colors.grid,
             "paneProperties.horzGridProperties.style": LINESTYLE_SOLID,
-            "paneProperties.crossHairProperties.color": colors.textWeak,
+            "paneProperties.crossHairProperties.color": colors.grid,
 
             // leftAxisProperties & rightAxisProperties
             "scalesProperties.lineColor": colors.textStrong,
