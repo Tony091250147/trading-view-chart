@@ -169,12 +169,58 @@
           client_id: 'tradingview.com',
           user_id: 'public_user_id',
           overrides: {
+            //  supported values": large, medium, small, tiny
+            "volumePaneSize": "medium",
+
+            //  fonts available in text editors (i.e., in `Text` drawing tool properties dialog)
+            "editorFontsList": [
+              "-apple-system", "BlinkMacSystemFont", "Open Sans",
+              "Segoe UI", "Helvetica Neue", "sans-serif"
+            ],
+
+            // Grid
             "paneProperties.background": colors.bg,
-            "paneProperties.vertGridProperties.color": colors.textWeak,
+            "paneProperties.vertGridProperties.color": colors.bg,
             "paneProperties.vertGridProperties.style": LINESTYLE_SOLID,
-            "paneProperties.horzGridProperties.color": colors.textWeak,
+            "paneProperties.horzGridProperties.color": colors.bg,
+            // "paneProperties.horzGridProperties.color": colors.textWeak,
             "paneProperties.horzGridProperties.style": LINESTYLE_SOLID,
-            "paneProperties.crossHairProperties.color": colors.textWeak,
+            "paneProperties.crossHairProperties.color": colors.bg,
+            // "paneProperties.crossHairProperties.color": colors.textWeak,
+
+            // leftAxisProperties & rightAxisProperties
+            "scalesProperties.lineColor": colors.textStrong,
+            "scalesProperties.textColor": colors.textStrong,
+
+            //  Series style. See the supported values below
+            //    candles = 1
+            //    hollow candles = 9
+            "mainSeriesProperties.style": 9,
+
+            // symbol
+            "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0.00)",
+
+            //  Candles styles
+            "mainSeriesProperties.candleStyle.upColor": colors.longFill,
+            "mainSeriesProperties.candleStyle.downColor": colors.shortFill,
+            "mainSeriesProperties.candleStyle.drawWick": true,
+            "mainSeriesProperties.candleStyle.drawBorder": true,
+            "mainSeriesProperties.candleStyle.borderColor": "#378658",
+            "mainSeriesProperties.candleStyle.borderUpColor": colors.long,
+            "mainSeriesProperties.candleStyle.borderDownColor": colors.short,
+            "mainSeriesProperties.candleStyle.wickUpColor": 'rgba( 115, 115, 117, 1)',
+            "mainSeriesProperties.candleStyle.wickDownColor": 'rgba( 115, 115, 117, 1)',
+            "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
+
+            //  Hollow Candles styles
+            "mainSeriesProperties.hollowCandleStyle.upColor": colors.longFill,
+            "mainSeriesProperties.hollowCandleStyle.downColor": colors.shortFill,
+            "mainSeriesProperties.hollowCandleStyle.drawWick": true,
+            "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
+            "mainSeriesProperties.hollowCandleStyle.borderColor": "#378658",
+            "mainSeriesProperties.hollowCandleStyle.borderUpColor": colors.long,
+            "mainSeriesProperties.hollowCandleStyle.borderDownColor": colors.short,
+            "mainSeriesProperties.hollowCandleStyle.wickColor": "#737375",
           },
         });
       });
