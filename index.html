@@ -23,6 +23,11 @@
           return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
 
+      var LINESTYLE_SOLID = 0;
+      var LINESTYLE_DOTTED = 1;
+      var LINESTYLE_DASHED = 2;
+      var LINESTYLE_LARGE_DASHED = 3;
+
 			TradingView.onready(function() {
 				var widget = window.tvWidget = new TradingView.widget({
 					fullscreen: true,
