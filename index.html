@@ -147,7 +147,7 @@
           alert: '#f8be49',
         },
       };
-      var theme = 'green';
+      var theme = getParameterByName('theme') || 'light';
       var colors = schemes[theme];
 
       TradingView.onready(function() {
@@ -185,11 +185,9 @@
             "paneProperties.background": colors.bg,
             "paneProperties.vertGridProperties.color": colors.bg,
             "paneProperties.vertGridProperties.style": LINESTYLE_SOLID,
-            "paneProperties.horzGridProperties.color": colors.bg,
-            // "paneProperties.horzGridProperties.color": colors.textWeak,
+            "paneProperties.horzGridProperties.color": colors.textWeak,
             "paneProperties.horzGridProperties.style": LINESTYLE_SOLID,
-            "paneProperties.crossHairProperties.color": colors.bg,
-            // "paneProperties.crossHairProperties.color": colors.textWeak,
+            "paneProperties.crossHairProperties.color": colors.textWeak,
 
             // leftAxisProperties & rightAxisProperties
             "scalesProperties.lineColor": colors.textStrong,
