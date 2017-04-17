@@ -265,7 +265,19 @@
             "mainSeriesProperties.areaStyle.linecolor": colors.ctaHighlight,
             "mainSeriesProperties.areaStyle.linestyle": LINESTYLE_SOLID,
             "mainSeriesProperties.areaStyle.linewidth": 1,
-            "mainSeriesProperties.areaStyle.priceSource": "close"
+            "mainSeriesProperties.areaStyle.priceSource": "close",
+          },
+          // Indicator overrides
+          studies_overrides: {
+            // Volume
+            "volume.volume.color.0": colors.shortFill,
+            "volume.volume.color.1": colors.longFill,
+            "volume.volume.transparency": 0,
+            "volume.volume ma.color": colors.textStrong,
+            "volume.volume ma.transparency": 0,
+            "volume.volume ma.linewidth": 2,
+            "volume.volume ma.plottype": "line",
+            "volume.show ma": true,
           },
         });
       });
