@@ -8,8 +8,11 @@
 
 var Datafeeds = {};
 
-Datafeeds.UDFCompatibleDatafeed = function(datafeedURL, updateFrequency) {
+Datafeeds.UDFCompatibleDatafeed = function({ datafeedURL, updateFrequency, symbol, historyUrl }) {
   this._datafeedURL = datafeedURL;
+  this._symbol = symbol;
+  this._historyURL = historyUrl;
+
   this._configuration = undefined;
 
   this._symbolSearch = null;
@@ -241,49 +244,6 @@ Datafeeds.UDFCompatibleDatafeed.prototype.searchSymbols = function(searchString,
 Datafeeds.UDFCompatibleDatafeed.prototype._symbolResolveURL = '/symbols';
 
 //  BEWARE: this function does not consider symbol's exchange
-var QUOINE_SYMBOLS = {
-  "BTCUSD": 1,
-  "BTCEUR": 3,
-  "BTCJPY": 5,
-  "BTCSGD": 7,
-  "BTCHKD": 9,
-  "BTCIDR": 11,
-  "BTCAUD": 13,
-  "BTCPHP": 15,
-  "BTCCNY": 17,
-  "BTCINR": 18,
-  "ETHUSD": 27,
-  "ETHEUR": 28,
-  "ETHJPY": 29,
-  "ETHSGD": 30,
-  "ETHHKD": 31,
-  "ETHIDR": 32,
-  "ETHAUD": 33,
-  "ETHPHP": 34,
-  "ETHCNY": 35,
-  "ETHINR": 36,
-  "ETHBTC": 37
-};
-
-function getParameterByName(name) {
-  var url = window.location.href;
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function getSymbol() {
-  return getParameterByName('symbol') || 'BTCUSD'
-};
-
-function getHistoryUrl() {
-  var symbol = getSymbol();
-  return '/products/' + QUOINE_SYMBOLS[symbol] + '/history';
-}
-
 Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
   var that = this;
 
@@ -310,9 +270,8 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
   }
 
   setTimeout(function() {
-    var symbol = getSymbol();
     onResultReady({
-      "name": symbol,
+      "name": that._symbol,
       "exchange-traded": "QUOINE",
       "exchange-listed": "QUOINE",
       "timezone": "America/New_York",
@@ -323,8 +282,8 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
       "session": "0930-1630",
       "has_intraday": true,
       "has_no_volume": false,
-      "ticker": symbol,
-      "description": symbol,
+      "ticker": that._symbol,
+      "description": that._symbol,
       "type": "stock",
       "supported_resolutions": [  
         "1",
@@ -344,8 +303,6 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
     });
   }, 0);
 };
-
-Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = getHistoryUrl();
 
 function convertResolutionToMinutes(resolution) {
   // Resolution is minute
