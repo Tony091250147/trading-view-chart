@@ -338,13 +338,11 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
   }
 
   this._send(this._datafeedURL + this._historyURL, {
-    // symbol: symbolInfo.ticker.toUpperCase(),
     resolution: convertResolutionToMinutes(resolution),
     from: rangeStartDate,
     to: rangeEndDate
   })
   .done(function(response) {
-    // var data = JSON.parse(response);
     var data = response;
 
     var nodata = data.s === 'no_data';
