@@ -172,7 +172,7 @@
         var widget = window.tvWidget = new TradingView.widget({
           fullscreen: true,
           symbol: symbol,
-          interval: 'D',
+          interval: '60',
           container_id: "tv_chart_container",
           //  BEWARE: this constructor was be modified to receive data form iframe url
           datafeed: new Datafeeds.UDFCompatibleDatafeed({
