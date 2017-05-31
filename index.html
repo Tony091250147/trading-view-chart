@@ -177,7 +177,7 @@
           //  BEWARE: this constructor was be modified to receive data form iframe url
           datafeed: new Datafeeds.UDFCompatibleDatafeed({
             datafeedURL: "https://staging1.quoine.com",
-            updateFrequency: 10000,
+            updateFrequency: 60 * 60 * 1000, // 1 minute to milisecond
             symbol: symbol,
             historyUrl: historyUrl,
           }),
