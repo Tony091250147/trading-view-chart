@@ -290,6 +290,21 @@
           },
           time_frames: [],
         });
+        widget.onChartReady(function() {
+          widget.chart().onIntervalChanged().subscribe(null, function(interval, obj) {
+            // we will set timeframe to 1D if interval is less than 1H
+            // to avoid overflow
+
+            // if is not in minutes or larger than 1 hour (60 min) then return
+            var numInterval = Number(interval);
+            if (isNaN(numInterval) || numInterval >= 60) {
+              return;
+            }
+
+            // need reset timeframe
+            obj.timeframe = "5D";
+          })
+        });
       });
 
     </script>
