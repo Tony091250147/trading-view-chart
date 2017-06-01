@@ -169,11 +169,53 @@
       var LINESTYLE_DASHED = 2;
       var LINESTYLE_LARGE_DASHED = 3;
 
+      // Caculate timeframe to show 500 tickers by default
+      function getTimeFrame(interval) {
+        var numInterval = Number(interval);
+
+        // interval is Minute
+        if (!isNaN(numInterval)) {
+          var minutes = numInterval;
+          if (minutes < 60) {
+            return '1D';
+          }
+          else {
+            return '5D';
+          }
+        }
+        // interval is Day
+        else if (interval.indexOf('D') !== -1) {
+          var days = interval.slice(0, length -1) || 1;
+          return '1M';
+        }
+        // interval is Week
+        else if (interval.indexOf('W') !== -1) {
+          var weeks = interval.slice(0, length -1) || 1;
+          return '10M';
+        }
+        // interval is Month
+        else if (interval.indexOf('M') !== -1) {
+          var months = interval.slice(0, length -1) || 1;
+          return '24M';
+        }
+        else {
+          return '1D';
+        }
+      };
+
+      var DEAULT_INTERVAL = '60';
+      var DEFAULT_TIMEFRAME = getTimeFrame(DEAULT_INTERVAL);
+      console.log({
+        DEAULT_INTERVAL: DEAULT_INTERVAL,
+        DEFAULT_TIMEFRAME: DEFAULT_TIMEFRAME,
+      });
+
       TradingView.onready(function() {
         var widget = window.tvWidget = new TradingView.widget({
           fullscreen: true,
           symbol: symbol,
-          interval: '60',
+          interval: DEAULT_INTERVAL,
+          timeframe: DEFAULT_TIMEFRAME,
           container_id: "tv_chart_container",
           //  BEWARE: this constructor was be modified to receive data form iframe url
           datafeed: new Datafeeds.UDFCompatibleDatafeed({
@@ -293,17 +335,11 @@
         });
         widget.onChartReady(function() {
           widget.chart().onIntervalChanged().subscribe(null, function(interval, obj) {
-            // we will set timeframe to 1D if interval is less than 1H
-            // to avoid overflow
-
-            // if is not in minutes or larger than 1 hour (60 min) then return
-            var numInterval = Number(interval);
-            if (isNaN(numInterval) || numInterval >= 60) {
-              return;
-            }
-
-            // need reset timeframe
-            obj.timeframe = "5D";
+            console.log({
+              interval: interval,
+              timeframe: getTimeFrame(interval),
+            });
+            obj.timeframe = getTimeFrame(interval);
           })
         });
       });
