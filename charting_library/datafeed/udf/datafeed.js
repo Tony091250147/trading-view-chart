@@ -346,35 +346,44 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
     throw new Error(['Got a JS time instead of Unix one.', rangeStartDate, rangeEndDate]);
   }
 
+  var resolution = convertResolutionToMinutes(resolution);
   this._send(this._datafeedURL + this._historyURL, {
-    resolution: convertResolutionToMinutes(resolution),
+    resolution: resolution,
     from: rangeStartDate,
     to: rangeEndDate
   })
   .done(function(response) {
-    var data = response;
-
-    var nodata = data.s === 'no_data';
-
-    if (data.s !== 'ok' && !nodata) {
+    //  response is JSON having format {s: "status" (ok, no_data, error),
+    //  v: [volumes], t: [times], o: [opens], h: [highs], l: [lows], c:[closes], nb: "optional_unixtime_if_no_data"}
+    if (response.s !== 'ok' && response.s !== 'no_data') {
       if (!!onErrorCallback) {
-        onErrorCallback(data.s);
+        onErrorCallback(response.s);
       }
 
       return;
     }
 
-    var bars = [];
-
-    //  data is JSON having format {s: "status" (ok, no_data, error),
-    //  v: [volumes], t: [times], o: [opens], h: [highs], l: [lows], c:[closes], nb: "optional_unixtime_if_no_data"}
-    var barsCount = nodata ? 0 : data.t.length;
+    // remove invalid response item
+    var length = response.t.length;
+    var maxTime = rangeEndDate + resolution * 60;
+    var indexToSlice = response.t.findIndex(function(time) {
+      return time > maxTime;
+    });
+    var data = indexToSlice === -1 ? response : ({
+      c: response.c.slice(0, indexToSlice),
+      h: response.h.slice(0, indexToSlice),
+      l: response.l.slice(0, indexToSlice),
+      o: response.o.slice(0, indexToSlice),
+      t: response.t.slice(0, indexToSlice),
+      v: response.v.slice(0, indexToSlice),
+    });
 
     var volumePresent = typeof data.v != 'undefined';
     var ohlPresent = typeof data.o != 'undefined';
 
-    for (var i = 0; i < barsCount; ++i) {
-      if (data.o[i]) {
+    var bars = [];
+    for (var i = 0; i < data.t.length; ++i) {
+      if (data.c[i]) {
         var barValue = {
           time: data.t[i] * 1000,
           close: data.c[i]
