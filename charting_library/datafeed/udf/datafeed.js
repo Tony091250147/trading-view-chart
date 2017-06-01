@@ -395,7 +395,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
       }
     }
 
-    onDataCallback(bars, { noData: nodata, nextTime: data.nb || data.nextTime });
+    onDataCallback(bars, { noData: bars.length === 0, nextTime: data.nb || data.nextTime });
   })
   .fail(function(arg) {
     console.warn(['getBars(): HTTP error', arg]);
