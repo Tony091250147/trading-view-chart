@@ -281,6 +281,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function(symbolName, o
       "pointvalue": 1,
       "session": "24x7",
       "has_intraday": true,
+      "has_empty_bars": true,
       "intraday_multipliers": [
         "1",
         "3",
