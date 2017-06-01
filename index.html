@@ -205,10 +205,6 @@
 
       var DEAULT_INTERVAL = 'D';
       var DEFAULT_TIMEFRAME = getTimeFrame(DEAULT_INTERVAL);
-      console.log({
-        DEAULT_INTERVAL: DEAULT_INTERVAL,
-        DEFAULT_TIMEFRAME: DEFAULT_TIMEFRAME,
-      });
 
       TradingView.onready(function() {
         var widget = window.tvWidget = new TradingView.widget({
@@ -335,10 +331,6 @@
         });
         widget.onChartReady(function() {
           widget.chart().onIntervalChanged().subscribe(null, function(interval, obj) {
-            console.log({
-              interval: interval,
-              timeframe: getTimeFrame(interval),
-            });
             obj.timeframe = getTimeFrame(interval);
           })
         });
