@@ -27,6 +27,7 @@
       var theme = getParameterByName('theme') || 'light';
       var symbol = getParameterByName('symbol') || 'BTCUSD';
       var productId = getParameterByName('productId') || '1';
+      var datafeedURL = getParameterByName('apiServer') || 'https://staging1.quoine.com';
 
       // Prepare
       var colors = (function getColorByTheme() {
@@ -176,7 +177,7 @@
           container_id: "tv_chart_container",
           //  BEWARE: this constructor was be modified to receive data form iframe url
           datafeed: new Datafeeds.UDFCompatibleDatafeed({
-            datafeedURL: "https://staging1.quoine.com",
+            datafeedURL: datafeedURL,
             updateFrequency: 60 * 60 * 1000, // 1 minute to milisecond
             symbol: symbol,
             historyUrl: historyUrl,
